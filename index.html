@@ -18,6 +18,7 @@
             align-items: flex-start; /* Align to the top to allow scrolling for longer content */
             min-height: 100vh; /* Minimum height of the viewport */
             padding: 20px; /* Padding around the main container */
+            margin: 0;
         }
         /* A4 container specific styles for size, shadow, and padding */
         .a4-container {
@@ -25,15 +26,17 @@
             width: 210mm; /* Standard A4 width */
             min-height: 297mm; /* Standard A4 height */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-            padding: 30mm; /* Standard margins for A4 document */
+            padding: 20mm; /* Reduced padding to fit content better */
             box-sizing: border-box; /* Include padding in the element's total width and height */
             border-radius: 8px; /* Slightly rounded corners */
             position: relative; /* Needed for sticky print button */
+            margin: 0 auto;
         }
         /* Styling for all input fields and textareas */
         input[type="text"],
         input[type="email"],
-        input[type="date"] {
+        input[type="date"],
+        input[type="number"] {
             width: 100%; /* Full width of their container */
             padding: 8px 12px; /* Inner padding */
             margin-top: 4px; /* Space above */
@@ -63,7 +66,9 @@
         input[type="text"]:focus,
         input[type="email"]:focus,
         input[type="date"]:focus,
-        textarea:focus {
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
             outline: none; /* Remove default outline */
             border-color: #2563eb; /* Blue border on focus */
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); /* Blue shadow on focus */
@@ -75,178 +80,214 @@
             font-weight: 500; /* Medium font weight */
             color: #374151; /* Dark gray text color */
         }
-        /* Styling for section titles */
-        .section-title {
-            font-size: 1.5rem; /* Larger font size */
-            font-weight: 600; /* Semi-bold font weight */
-            color: #1f2937; /* Darker gray text color */
-            margin-top: 24px; /* Space above */
-            margin-bottom: 16px; /* Space below */
-            border-bottom: 1px solid #e5e7eb; /* Light gray bottom border */
-            padding-bottom: 8px; /* Padding below text and above border */
+        /* Styling for select dropdown */
+        select {
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            line-height: 1.5;
+            background-color: white;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-sizing: border-box;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23374151' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
         }
-        /* Styling for the footer line */
-        .footer-line {
-            border-top: 1px solid #e5e7eb; /* Light gray top border */
-            margin-top: 40px; /* Space above */
-            padding-top: 10px; /* Padding above text */
-            text-align: center; /* Center align text */
-            font-size: 0.875rem; /* Smaller font size */
-            color: #6b7280; /* Medium gray text color */
+        /* Styling for required field indicator */
+        .required::after {
+            content: "*";
+            color: #dc2626;
+            margin-left: 4px;
         }
-        /* Container for the print button, making it sticky at the bottom */
-        .print-button-container {
-            position: sticky; /* Sticky positioning */
-            bottom: 20px; /* 20px from the bottom */
-            left: 50%; /* Start at 50% from the left */
-            transform: translateX(-50%); /* Center horizontally using transform */
-            z-index: 100; /* Ensure it's above other content */
-            margin-top: 20px; /* Space above */
-            text-align: center; /* Center align button */
-        }
-        /* Styling for the print button */
-        .print-button {
-            background-color: #2563eb; /* Blue background */
-            color: #ffffff; /* White text */
-            padding: 12px 24px; /* Padding inside button */
-            border: none; /* No border */
-            border-radius: 8px; /* Rounded corners */
-            font-size: 1rem; /* Standard font size */
-            font-weight: 600; /* Semi-bold font weight */
-            cursor: pointer; /* Pointer cursor on hover */
-            transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-        }
-        /* Hover state for the print button */
-        .print-button:hover {
-            background-color: #1d4ed8; /* Darker blue on hover */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
-        }
-
-        /* Print-specific styles: These apply ONLY when the document is being printed */
+        /* Hide print button when printing */
         @media print {
             body {
-                background-color: #ffffff; /* White background for print */
-                margin: 0; /* No margins */
-                padding: 0; /* No padding */
-                display: block; /* Change display to block */
-                min-height: auto; /* Auto height */
+                background-color: white;
+                padding: 0;
+                margin: 0;
             }
             .a4-container {
-                box-shadow: none; /* Remove shadow for print */
-                margin: 0; /* No margins */
-                padding: 30mm; /* Ensure consistent print margins */
-                width: 210mm; /* A4 width */
-                min-height: 297mm; /* A4 height */
-                border-radius: 0; /* No rounded corners */
+                box-shadow: none;
+                padding: 15mm; /* Standard print margins */
+                width: 100%;
+                min-height: auto;
+                border-radius: 0;
             }
-            .print-button-container {
-                display: none; /* Hide the print button when printing */
+            .download-button {
+                display: none;
             }
-            input[type="text"],
-            input[type="email"],
-            input[type="date"],
-            textarea {
-                border: none; /* Hide borders for a cleaner print */
-                border-bottom: 1px dashed #9ca3af; /* Use dashed line for input fields on print */
-                padding: 0; /* No padding */
-                margin-bottom: 8px; /* Space below */
-                border-radius: 0; /* No rounded corners */
+            /* Ensure page breaks don't happen in the middle of sections */
+            .form-section {
+                page-break-inside: avoid;
             }
-            /* Adjust height for textareas on print to prevent cut-off text */
-            textarea {
-                min-height: 3em; /* Ensure enough space for text */
-                height: auto !important; /* Override any inline styles */
-                overflow: hidden; /* Hide scrollbar if any */
-            }
-            /* Ensure placeholder text is not visible in printed inputs */
-            input::placeholder {
-                color: transparent;
-            }
+        }
+        /* Form section styling */
+        .form-section {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        /* Form header styling */
+        .form-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-header h1 {
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        .form-header p {
+            color: #6b7280;
+        }
+        /* Two column layout for some form fields */
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+        .form-col {
+            flex: 1;
+        }
+        /* Download button styling */
+        .download-button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        .download-button:hover {
+            background-color: #1d4ed8;
+        }
+        .download-button svg {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
 <body>
     <div class="a4-container">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Refund Request Form</h1>
-
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <label for="requestDate" class="font-semibold text-gray-700">Date:</label>
-                <!-- Input for the request date, automatically set to today's date via JavaScript -->
-                <input type="date" id="requestDate" class="w-auto border-b border-gray-300 rounded-md py-1 px-2 text-gray-700">
-            </div>
+        <!-- Form Header -->
+        <div class="form-header">
+            <h1 class="text-2xl font-bold">Refund Request Form</h1>
+            <p>Please complete all fields marked with an asterisk (*)</p>
         </div>
 
-        <div class="section-title">Recipient Information</div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label for="recipientName">Recipient Name / Company Name:</label>
-                <input type="text" id="recipientName" placeholder="[Recipient Name/Company]">
+        <!-- Refund Request Form -->
+        <form id="refundForm">
+            <!-- Recipient Information Section -->
+            <div class="form-section">
+                <h2 class="text-xl font-semibold mb-4">Recipient Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="firstName" class="required">First Name</label>
+                        <input type="text" id="firstName" name="firstName">
+                    </div>
+                    <div class="form-col">
+                        <label for="lastName" class="required">Last Name</label>
+                        <input type="text" id="lastName" name="lastName">
+                    </div>
+                </div>
+                
+                <label for="email" class="required">Email Address</label>
+                <input type="email" id="email" name="email">
             </div>
-            <div>
-                <label for="recipientEmail">Email Address:</label>
-                <input type="email" id="recipientEmail" placeholder="[Recipient Email]">
+            
+            <!-- Refund Details Section -->
+            <div class="form-section">
+                <h2 class="text-xl font-semibold mb-4">Refund Details</h2>
+                
+                <label for="orderNumber" class="required">Order/Invoice Number</label>
+                <input type="text" id="orderNumber" name="orderNumber">
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="purchaseDate" class="required">Purchase Date</label>
+                        <input type="date" id="purchaseDate" name="purchaseDate">
+                    </div>
+                    <div class="form-col">
+                        <label for="purchaseAmount" class="required">Purchase Amount</label>
+                        <input type="number" id="purchaseAmount" name="purchaseAmount" step="0.01" min="0">
+                    </div>
+                </div>
+                
+                <label for="paymentMethod" class="required">Payment Method</label>
+                <select id="paymentMethod" name="paymentMethod">
+                    <option value="">Select payment method</option>
+                    <option value="creditCard">Credit Card</option>
+                    <option value="debitCard">Debit Card</option>
+                    <option value="bankTransfer">Bank Transfer</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cash">Cash</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <label for="productDetails" class="required">Product/Service Details</label>
+                <textarea id="productDetails" name="productDetails" rows="3"></textarea>
             </div>
-        </div>
-
-        <div class="section-title">Refund Details</div>
-        <div>
-            <label for="originalTransactionId">Original Transaction ID / Order Number:</label>
-            <input type="text" id="originalTransactionId" placeholder="[e.g., ORD12345, INV67890]">
-        </div>
-        <div>
-            <label for="originalTransactionDate">Original Transaction Date:</label>
-            <input type="date" id="originalTransactionDate">
-        </div>
-        <div>
-            <label for="refundAmount">Refund Amount:</label>
-            <input type="text" id="refundAmount" placeholder="[e.g., $150.00, €99.99]">
-        </div>
-
-        <div class="section-title">Bank Details for Refund</div>
-        <p class="text-sm text-gray-600 mb-4">Please provide accurate bank details for the refund to be processed.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label for="bankName">Bank Name:</label>
-                <input type="text" id="bankName" placeholder="[e.g., Bank of America, HSBC]">
+            
+            <!-- Bank Details for Refund Section -->
+            <div class="form-section">
+                <h2 class="text-xl font-semibold mb-4">Bank Details for Refund</h2>
+                
+                <label for="bankName" class="required">Bank Name</label>
+                <input type="text" id="bankName" name="bankName">
+                
+                <label for="accountName" class="required">Account Name</label>
+                <input type="text" id="accountName" name="accountName">
+                
+                <label for="accountNumber" class="required">Account Number</label>
+                <input type="text" id="accountNumber" name="accountNumber">
+                
+                <label for="preferredRefundMethod" class="required">Preferred Refund Method</label>
+                <select id="preferredRefundMethod" name="preferredRefundMethod">
+                    <option value="">Select refund method</option>
+                    <option value="originalPayment">Original Payment Method</option>
+                    <option value="bankTransfer">Bank Transfer</option>
+                    <option value="check">Check</option>
+                </select>
             </div>
-            <div>
-                <label for="accountName">Account Holder Name:</label>
-                <input type="text" id="accountName" placeholder="[Name on Bank Account]">
-            </div>
-            <div>
-                <label for="accountNumber">Account Number / IBAN:</label>
-                <input type="text" id="accountNumber" placeholder="[Your Account Number or IBAN]">
-            </div>
-        </div>
-
-        <div class="mt-12 text-center">
-            <p class="mb-8 text-gray-700">Sincerely,</p>
-            <div class="w-2/3 mx-auto border-b border-gray-400 pb-2"></div>
-            <p class="mt-2 text-gray-600">Signature / Authorized Name</p>
-        </div>
-
-        <div class="footer-line">
-            <!-- This section is intentionally left blank as per user request -->
-        </div>
+            
+            <!-- Download PDF Button -->
+            <button type="button" id="downloadPDF" class="download-button" onclick="printDocument()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download PDF
+            </button>
+        </form>
     </div>
-
-    <div class="print-button-container">
-        <button class="print-button" onclick="window.print()">
-            Print / Download
-        </button>
-    </div>
-
+    
     <script>
-        // JavaScript to automatically set the request date to today's date
-        window.onload = function() {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0'); // Get month (0-indexed) and pad with leading zero if needed
-            const day = String(today.getDate()).padStart(2, '0'); // Get day and pad with leading zero if needed
-            document.getElementById('requestDate').value = `${year}-${month}-${day}`; // Set the value of the date input
-        };
+        // Function to print/download the document
+        function printDocument() {
+            window.print();
+        }
+        
+        // Also attach the event listener to the button
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('downloadPDF').addEventListener('click', printDocument);
+        });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9639b536108b5064',t:'MTc1MzI1ODI5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
