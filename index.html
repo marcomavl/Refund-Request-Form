@@ -1,264 +1,252 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.2">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d6d6d; -webkit-text-stroke: #6d6d6d}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6b0001; -webkit-text-stroke: #6b0001}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #fb0007; -webkit-text-stroke: #fb0007}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #0000ff; -webkit-text-stroke: #0000ff}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4d5055; -webkit-text-stroke: #4d5055}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #093c94; -webkit-text-stroke: #093c94}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000; min-height: 16.0px}
-    span.s1 {font-kerning: none; background-color: #ecf1f7}
-    span.s2 {font-kerning: none; color: #fb0007; background-color: #ecf1f7; -webkit-text-stroke: 0px #fb0007}
-    span.s3 {font-kerning: none; color: #2a2a2a; background-color: #ecf1f7; -webkit-text-stroke: 0px #2a2a2a}
-    span.s4 {font-kerning: none; color: #000000; background-color: #ecf1f7; -webkit-text-stroke: 0px #000000}
-    span.s5 {font-kerning: none; color: #0000ff; background-color: #ecf1f7; -webkit-text-stroke: 0px #0000ff}
-    span.s6 {font-kerning: none; color: #6b0001; background-color: #ecf1f7; -webkit-text-stroke: 0px #6b0001}
-    span.s7 {font-kerning: none; color: #18702b; background-color: #ecf1f7; -webkit-text-stroke: 0px #18702b}
-    span.s8 {font-kerning: none; color: #093c94; background-color: #ecf1f7; -webkit-text-stroke: 0px #093c94}
-    span.s9 {font-kerning: none; color: #137646; background-color: #ecf1f7; -webkit-text-stroke: 0px #137646}
-    span.s10 {font-kerning: none; color: #4d5055; background-color: #ecf1f7; -webkit-text-stroke: 0px #4d5055}
-    span.s11 {font-kerning: none}
-    span.s12 {font-kerning: none; color: #6f0ec3; background-color: #ecf1f7; -webkit-text-stroke: 0px #6f0ec3}
-    span.s13 {font-kerning: none; color: #0e6e6d; background-color: #ecf1f7; -webkit-text-stroke: 0px #0e6e6d}
-    span.s14 {font-kerning: none; color: #a4450b; background-color: #ecf1f7; -webkit-text-stroke: 0px #a4450b}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Request Form</title>
+    <!-- Link to Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link to Google Fonts for Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for the body, ensuring centering and A4 container visibility */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: flex-start; /* Align to the top to allow scrolling for longer content */
+            min-height: 100vh; /* Minimum height of the viewport */
+            padding: 20px; /* Padding around the main container */
+        }
+        /* A4 container specific styles for size, shadow, and padding */
+        .a4-container {
+            background-color: #ffffff; /* White background for the form */
+            width: 210mm; /* Standard A4 width */
+            min-height: 297mm; /* Standard A4 height */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            padding: 30mm; /* Standard margins for A4 document */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+            border-radius: 8px; /* Slightly rounded corners */
+            position: relative; /* Needed for sticky print button */
+        }
+        /* Styling for all input fields and textareas */
+        input[type="text"],
+        input[type="email"],
+        input[type="date"] {
+            width: 100%; /* Full width of their container */
+            padding: 8px 12px; /* Inner padding */
+            margin-top: 4px; /* Space above */
+            margin-bottom: 12px; /* Space below */
+            border: 1px solid #d1d5db; /* Light gray border */
+            border-radius: 6px; /* Rounded corners for inputs */
+            font-size: 1rem; /* Standard font size */
+            line-height: 1.5; /* Line height for readability */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions for focus states */
+            box-sizing: border-box; /* Ensure padding doesn't increase width */
+        }
+        /* Styling for textarea to match inputs */
+        textarea {
+            width: 100%; /* Full width of their container */
+            padding: 8px 12px; /* Inner padding */
+            margin-top: 4px; /* Space above */
+            margin-bottom: 12px; /* Space below */
+            border: 1px solid #d1d5db; /* Light gray border */
+            border-radius: 6px; /* Rounded corners for inputs */
+            font-size: 1rem; /* Standard font size */
+            line-height: 1.5; /* Line height for readability */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions for focus states */
+            box-sizing: border-box; /* Ensure padding doesn't increase width */
+            resize: vertical; /* Allow vertical resizing for textareas */
+        }
+        /* Focus styles for input fields and textareas */
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none; /* Remove default outline */
+            border-color: #2563eb; /* Blue border on focus */
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); /* Blue shadow on focus */
+        }
+        /* Styling for labels */
+        label {
+            display: block; /* Make labels block-level for proper spacing */
+            margin-bottom: 4px; /* Space below label */
+            font-weight: 500; /* Medium font weight */
+            color: #374151; /* Dark gray text color */
+        }
+        /* Styling for section titles */
+        .section-title {
+            font-size: 1.5rem; /* Larger font size */
+            font-weight: 600; /* Semi-bold font weight */
+            color: #1f2937; /* Darker gray text color */
+            margin-top: 24px; /* Space above */
+            margin-bottom: 16px; /* Space below */
+            border-bottom: 1px solid #e5e7eb; /* Light gray bottom border */
+            padding-bottom: 8px; /* Padding below text and above border */
+        }
+        /* Styling for the footer line */
+        .footer-line {
+            border-top: 1px solid #e5e7eb; /* Light gray top border */
+            margin-top: 40px; /* Space above */
+            padding-top: 10px; /* Padding above text */
+            text-align: center; /* Center align text */
+            font-size: 0.875rem; /* Smaller font size */
+            color: #6b7280; /* Medium gray text color */
+        }
+        /* Container for the print button, making it sticky at the bottom */
+        .print-button-container {
+            position: sticky; /* Sticky positioning */
+            bottom: 20px; /* 20px from the bottom */
+            left: 50%; /* Start at 50% from the left */
+            transform: translateX(-50%); /* Center horizontally using transform */
+            z-index: 100; /* Ensure it's above other content */
+            margin-top: 20px; /* Space above */
+            text-align: center; /* Center align button */
+        }
+        /* Styling for the print button */
+        .print-button {
+            background-color: #2563eb; /* Blue background */
+            color: #ffffff; /* White text */
+            padding: 12px 24px; /* Padding inside button */
+            border: none; /* No border */
+            border-radius: 8px; /* Rounded corners */
+            font-size: 1rem; /* Standard font size */
+            font-weight: 600; /* Semi-bold font weight */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        /* Hover state for the print button */
+        .print-button:hover {
+            background-color: #1d4ed8; /* Darker blue on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+        }
+
+        /* Print-specific styles: These apply ONLY when the document is being printed */
+        @media print {
+            body {
+                background-color: #ffffff; /* White background for print */
+                margin: 0; /* No margins */
+                padding: 0; /* No padding */
+                display: block; /* Change display to block */
+                min-height: auto; /* Auto height */
+            }
+            .a4-container {
+                box-shadow: none; /* Remove shadow for print */
+                margin: 0; /* No margins */
+                padding: 30mm; /* Ensure consistent print margins */
+                width: 210mm; /* A4 width */
+                min-height: 297mm; /* A4 height */
+                border-radius: 0; /* No rounded corners */
+            }
+            .print-button-container {
+                display: none; /* Hide the print button when printing */
+            }
+            input[type="text"],
+            input[type="email"],
+            input[type="date"],
+            textarea {
+                border: none; /* Hide borders for a cleaner print */
+                border-bottom: 1px dashed #9ca3af; /* Use dashed line for input fields on print */
+                padding: 0; /* No padding */
+                margin-bottom: 8px; /* Space below */
+                border-radius: 0; /* No rounded corners */
+            }
+            /* Adjust height for textareas on print to prevent cut-off text */
+            textarea {
+                min-height: 3em; /* Ensure enough space for text */
+                height: auto !important; /* Override any inline styles */
+                overflow: hidden; /* Hide scrollbar if any */
+            }
+            /* Ensure placeholder text is not visible in printed inputs */
+            input::placeholder {
+                color: transparent;
+            }
+        }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">html</span><span class="s4"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s5">"en"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s5">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">title</span><span class="s3">&gt;</span><span class="s1">Refund Request Template</span><span class="s3">&lt;/</span><span class="s6">title</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Tailwind CSS CDN --&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s6">script</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">link</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"stylesheet"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">body</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s7">'Inter'</span><span class="s1">, </span><span class="s8">sans-serif</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s8">#f3f4f6</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s8">flex</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s8">center</span><span class="s4">;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s4"> </span><span class="s8">flex-start</span><span class="s4">; </span><span class="s1">/* Align to top for better scrolling */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">min-height:</span><span class="s1"> </span><span class="s9">100vh</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s9">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.a4-container</span><span class="s4"> {</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s8">#ffffff</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">210mm</span><span class="s1">; </span><span class="s10">/* A4 width */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">min-height:</span><span class="s1"> </span><span class="s9">297mm</span><span class="s1">; </span><span class="s10">/* A4 height */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s9">0</span><span class="s1"> </span><span class="s9">4px</span><span class="s1"> </span><span class="s9">12px</span><span class="s1"> </span><span class="s8">rgba(</span><span class="s9">0</span><span class="s1">, </span><span class="s9">0</span><span class="s1">, </span><span class="s9">0</span><span class="s1">, </span><span class="s9">0.1</span><span class="s8">)</span><span class="s1">;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s4"> </span><span class="s9">30mm</span><span class="s4">; </span><span class="s1">/* Standard margins for A4 */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-sizing:</span><span class="s1"> </span><span class="s8">border-box</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s9">8px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s8">relative</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"text"</span><span class="s1">],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"email"</span><span class="s1">],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"date"</span><span class="s1">],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">textarea</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s9">8px</span><span class="s1"> </span><span class="s9">12px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s9">4px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-bottom:</span><span class="s1"> </span><span class="s9">12px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s9">1px</span><span class="s1"> </span><span class="s8">solid</span><span class="s1"> </span><span class="s8">#d1d5db</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s9">6px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">1rem</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">line-height:</span><span class="s1"> </span><span class="s9">1.5</span><span class="s1">;</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s4"> </span><span class="s1">border-color</span><span class="s4"> </span><span class="s9">0.2s</span><span class="s4"> </span><span class="s1">ease-in-out</span><span class="s4">, </span><span class="s1">box-shadow</span><span class="s4"> </span><span class="s9">0.2s</span><span class="s4"> </span><span class="s1">ease-in-out</span><span class="s4">;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">box-sizing:</span><span class="s4"> </span><span class="s8">border-box</span><span class="s4">; </span><span class="s1">/* Ensure padding doesn't increase width */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"text"</span><span class="s1">]</span><span class="s6">:focus</span><span class="s1">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"email"</span><span class="s1">]</span><span class="s6">:focus</span><span class="s1">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"date"</span><span class="s1">]</span><span class="s6">:focus</span><span class="s1">,</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">textarea:focus</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">outline:</span><span class="s1"> </span><span class="s8">none</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-color:</span><span class="s1"> </span><span class="s8">#2563eb</span><span class="s1">; </span><span class="s10">/* Blue 600 */</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s4"> </span><span class="s9">0</span><span class="s4"> </span><span class="s9">0</span><span class="s4"> </span><span class="s9">0</span><span class="s4"> </span><span class="s9">3px</span><span class="s4"> </span><span class="s8">rgba(</span><span class="s9">37</span><span class="s4">, </span><span class="s9">99</span><span class="s4">, </span><span class="s9">235</span><span class="s4">, </span><span class="s9">0.2</span><span class="s8">)</span><span class="s4">; </span><span class="s1">/* Blue 600 with opacity */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">label</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s8">block</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-bottom:</span><span class="s1"> </span><span class="s9">4px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s9">500</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s8">#374151</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.section-title</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">1.5rem</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s9">600</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s8">#1f2937</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s9">24px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-bottom:</span><span class="s1"> </span><span class="s9">16px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-bottom:</span><span class="s1"> </span><span class="s9">1px</span><span class="s1"> </span><span class="s8">solid</span><span class="s1"> </span><span class="s8">#e5e7eb</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">padding-bottom:</span><span class="s4"> </span><span class="s9">8px</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.footer-line</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-top:</span><span class="s1"> </span><span class="s9">1px</span><span class="s1"> </span><span class="s8">solid</span><span class="s1"> </span><span class="s8">#e5e7eb</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s9">40px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding-top:</span><span class="s1"> </span><span class="s9">10px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">text-align:</span><span class="s1"> </span><span class="s8">center</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">0.875rem</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s8">#6b7280</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.print-button-container</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s8">sticky</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">bottom:</span><span class="s1"> </span><span class="s9">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">left:</span><span class="s1"> </span><span class="s9">50%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s8">translateX(</span><span class="s9">-50%</span><span class="s8">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s9">100</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s9">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">text-align:</span><span class="s1"> </span><span class="s8">center</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.print-button</span><span class="s4"> {</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s8">#2563eb</span><span class="s4">; </span><span class="s10">/* Blue 600 */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s8">#ffffff</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s9">12px</span><span class="s1"> </span><span class="s9">24px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s8">none</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s9">8px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s9">1rem</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s9">600</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s8">pointer</span><span class="s1">;</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s4"> </span><span class="s1">background-color</span><span class="s4"> </span><span class="s9">0.2s</span><span class="s4"> </span><span class="s1">ease-in-out</span><span class="s4">, </span><span class="s1">box-shadow</span><span class="s4"> </span><span class="s9">0.2s</span><span class="s4"> </span><span class="s1">ease-in-out</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s9">0</span><span class="s1"> </span><span class="s9">4px</span><span class="s1"> </span><span class="s9">8px</span><span class="s1"> </span><span class="s8">rgba(</span><span class="s9">0</span><span class="s1">, </span><span class="s9">0</span><span class="s1">, </span><span class="s9">0</span><span class="s1">, </span><span class="s9">0.1</span><span class="s8">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.print-button:hover</span><span class="s4"> {</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s8">#1d4ed8</span><span class="s4">; </span><span class="s10">/* Blue 700 */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s9">0</span><span class="s1"> </span><span class="s9">6px</span><span class="s1"> </span><span class="s9">12px</span><span class="s1"> </span><span class="s8">rgba(</span><span class="s9">0</span><span class="s1">, </span><span class="s9">0</span><span class="s1">, </span><span class="s9">0</span><span class="s1">, </span><span class="s9">0.15</span><span class="s8">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">/* Print-specific styles */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>@</span><span class="s6">media</span><span class="s1"> </span><span class="s6">print</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>body {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">background-color:</span><span class="s1"> </span><span class="s8">#ffffff</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s9">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s9">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s8">block</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">min-height:</span><span class="s1"> </span><span class="s8">auto</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">.a4-container</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s8">none</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s9">0</span><span class="s1">;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s2">padding:</span><span class="s4"> </span><span class="s9">30mm</span><span class="s4">; </span><span class="s1">/* Ensure consistent print margins */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s9">210mm</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">min-height:</span><span class="s1"> </span><span class="s9">297mm</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s9">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">.print-button-container</span><span class="s4"> {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s2">display:</span><span class="s4"> </span><span class="s8">none</span><span class="s4">; </span><span class="s1">/* Hide the print button when printing */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"text"</span><span class="s1">],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"email"</span><span class="s1">],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">input</span><span class="s1">[</span><span class="s8">type</span><span class="s1">=</span><span class="s7">"date"</span><span class="s1">],</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">textarea</span><span class="s1"> {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s2">border:</span><span class="s4"> </span><span class="s8">none</span><span class="s4">; </span><span class="s1">/* Hide borders for a cleaner print */</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s2">border-bottom:</span><span class="s4"> </span><span class="s9">1px</span><span class="s4"> </span><span class="s8">dashed</span><span class="s4"> </span><span class="s8">#9ca3af</span><span class="s4">; </span><span class="s1">/* Use dashed line for input fields */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s9">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">margin-bottom:</span><span class="s1"> </span><span class="s9">8px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s9">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">/* Adjust height for textareas on print */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s6">textarea</span><span class="s1"> {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s2">min-height:</span><span class="s4"> </span><span class="s9">3em</span><span class="s4">; </span><span class="s1">/* Ensure enough space for text */</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s2">height:</span><span class="s4"> </span><span class="s8">auto</span><span class="s4"> </span><span class="s12">!important</span><span class="s4">; </span><span class="s1">/* Override inline styles if any */</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s2">overflow:</span><span class="s4"> </span><span class="s8">hidden</span><span class="s4">; </span><span class="s1">/* Hide scrollbar if any */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">/* Ensure text is visible in inputs */</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">input::placeholder</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s8">transparent</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"a4-container"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">h1</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl font-bold text-center text-gray-800 mb-8"</span><span class="s3">&gt;</span><span class="s4">Refund Request Form</span><span class="s3">&lt;/</span><span class="s6">h1</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-between items-center mb-6"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s4"> </span><span class="s2">for</span><span class="s3">=</span><span class="s1">"requestDate"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-semibold text-gray-700"</span><span class="s3">&gt;</span><span class="s4">Date:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"date"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"requestDate"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-auto border-b border-gray-300 rounded-md py-1 px-2 text-gray-700"</span><span class="s4"> </span><span class="s2">value</span><span class="s3">=</span><span class="s1">"&lt;?php echo date('Y-m-d'); ?&gt;"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"section-title"</span><span class="s3">&gt;</span><span class="s1">Recipient Information</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 md:grid-cols-2 gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"recipientName"</span><span class="s3">&gt;</span><span class="s1">Recipient Name / Company Name:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"recipientName"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"[Recipient Name/Company]"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"recipientEmail"</span><span class="s3">&gt;</span><span class="s1">Email Address:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"email"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"recipientEmail"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"[Recipient Email]"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"section-title"</span><span class="s3">&gt;</span><span class="s1">Refund Details</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"originalTransactionId"</span><span class="s3">&gt;</span><span class="s1">Original Transaction ID / Order Number:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"originalTransactionId"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"[e.g., ORD12345, INV67890]"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"originalTransactionDate"</span><span class="s3">&gt;</span><span class="s1">Original Transaction Date:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"date"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"originalTransactionDate"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"refundAmount"</span><span class="s3">&gt;</span><span class="s1">Refund Amount:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"refundAmount"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"[e.g., $150.00, €99.99]"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"section-title"</span><span class="s3">&gt;</span><span class="s1">Bank Details for Refund</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-sm text-gray-600 mb-4"</span><span class="s3">&gt;</span><span class="s1">Please provide accurate bank details for the refund to be processed.</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 md:grid-cols-2 gap-4"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"bankName"</span><span class="s3">&gt;</span><span class="s1">Bank Name:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"bankName"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"[e.g., Bank of America, HSBC]"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"accountName"</span><span class="s3">&gt;</span><span class="s1">Account Holder Name:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"accountName"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"[Name on Bank Account]"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s1"> </span><span class="s2">for</span><span class="s3">=</span><span class="s5">"accountNumber"</span><span class="s3">&gt;</span><span class="s1">Account Number / IBAN:</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"accountNumber"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"[Your Account Number or IBAN]"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mt-12 text-center"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mb-8 text-gray-700"</span><span class="s3">&gt;</span><span class="s1">Sincerely,</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-2/3 mx-auto border-b border-gray-400 pb-2"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-2 text-gray-600"</span><span class="s3">&gt;</span><span class="s1">Signature / Authorized Name</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"footer-line"</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">&lt;!-- Removed instructional text as requested --&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"print-button-container"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"print-button"</span><span class="s4"> </span><span class="s2">onclick</span><span class="s3">=</span><span class="s1">"window.print()"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>Print / Download</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// Set today's date automatically in the requestDate field</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>window.onload = </span><span class="s12">function</span><span class="s1">() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> today = </span><span class="s12">new</span><span class="s1"> </span><span class="s13">Date</span><span class="s1">();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> year = today.getFullYear();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> month = </span><span class="s13">String</span><span class="s1">(today.getMonth() + </span><span class="s14">1</span><span class="s1">).padStart(</span><span class="s14">2</span><span class="s1">, </span><span class="s7">'0'</span><span class="s1">); </span><span class="s10">// Months are 0-indexed</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> day = </span><span class="s13">String</span><span class="s1">(today.getDate()).padStart(</span><span class="s14">2</span><span class="s1">, </span><span class="s7">'0'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById(</span><span class="s7">'requestDate'</span><span class="s1">).value = </span><span class="s7">`</span><span class="s1">${year}</span><span class="s7">-</span><span class="s1">${month}</span><span class="s7">-</span><span class="s1">${day}</span><span class="s7">`</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
-<p class="p8"><span class="s11"></span><br></p>
+    <div class="a4-container">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Refund Request Form</h1>
+
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <label for="requestDate" class="font-semibold text-gray-700">Date:</label>
+                <!-- Input for the request date, automatically set to today's date via JavaScript -->
+                <input type="date" id="requestDate" class="w-auto border-b border-gray-300 rounded-md py-1 px-2 text-gray-700">
+            </div>
+        </div>
+
+        <div class="section-title">Recipient Information</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="recipientName">Recipient Name / Company Name:</label>
+                <input type="text" id="recipientName" placeholder="[Recipient Name/Company]">
+            </div>
+            <div>
+                <label for="recipientEmail">Email Address:</label>
+                <input type="email" id="recipientEmail" placeholder="[Recipient Email]">
+            </div>
+        </div>
+
+        <div class="section-title">Refund Details</div>
+        <div>
+            <label for="originalTransactionId">Original Transaction ID / Order Number:</label>
+            <input type="text" id="originalTransactionId" placeholder="[e.g., ORD12345, INV67890]">
+        </div>
+        <div>
+            <label for="originalTransactionDate">Original Transaction Date:</label>
+            <input type="date" id="originalTransactionDate">
+        </div>
+        <div>
+            <label for="refundAmount">Refund Amount:</label>
+            <input type="text" id="refundAmount" placeholder="[e.g., $150.00, €99.99]">
+        </div>
+
+        <div class="section-title">Bank Details for Refund</div>
+        <p class="text-sm text-gray-600 mb-4">Please provide accurate bank details for the refund to be processed.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="bankName">Bank Name:</label>
+                <input type="text" id="bankName" placeholder="[e.g., Bank of America, HSBC]">
+            </div>
+            <div>
+                <label for="accountName">Account Holder Name:</label>
+                <input type="text" id="accountName" placeholder="[Name on Bank Account]">
+            </div>
+            <div>
+                <label for="accountNumber">Account Number / IBAN:</label>
+                <input type="text" id="accountNumber" placeholder="[Your Account Number or IBAN]">
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <p class="mb-8 text-gray-700">Sincerely,</p>
+            <div class="w-2/3 mx-auto border-b border-gray-400 pb-2"></div>
+            <p class="mt-2 text-gray-600">Signature / Authorized Name</p>
+        </div>
+
+        <div class="footer-line">
+            <!-- This section is intentionally left blank as per user request -->
+        </div>
+    </div>
+
+    <div class="print-button-container">
+        <button class="print-button" onclick="window.print()">
+            Print / Download
+        </button>
+    </div>
+
+    <script>
+        // JavaScript to automatically set the request date to today's date
+        window.onload = function() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // Get month (0-indexed) and pad with leading zero if needed
+            const day = String(today.getDate()).padStart(2, '0'); // Get day and pad with leading zero if needed
+            document.getElementById('requestDate').value = `${year}-${month}-${day}`; // Set the value of the date input
+        };
+    </script>
 </body>
 </html>
