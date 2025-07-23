@@ -9,103 +9,92 @@
     <!-- Link to Google Fonts for Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Base styles for the body, ensuring centering and A4 container visibility */
+        /* Base styles for the body */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
+            background-color: #f3f4f6;
             display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: flex-start; /* Align to the top to allow scrolling for longer content */
-            min-height: 100vh; /* Minimum height of the viewport */
-            padding: 20px; /* Padding around the main container */
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
             margin: 0;
         }
-        /* A4 container specific styles for size, shadow, and padding */
+        /* A4 container specific styles */
         .a4-container {
-            background-color: #ffffff; /* White background for the form */
-            width: 210mm; /* Standard A4 width */
-            min-height: 297mm; /* Standard A4 height */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-            padding: 20mm; /* Reduced padding to fit content better */
-            box-sizing: border-box; /* Include padding in the element's total width and height */
-            border-radius: 8px; /* Slightly rounded corners */
-            position: relative; /* Needed for sticky print button */
+            background-color: #ffffff;
+            width: 210mm;
+            height: 297mm; /* Fixed height for A4 */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15mm;
+            box-sizing: border-box;
+            border-radius: 8px;
+            position: relative;
             margin: 0 auto;
+            overflow: hidden; /* Prevent content overflow */
         }
-        /* Styling for all input fields and textareas */
+        /* Compact form styles */
         input[type="text"],
         input[type="email"],
         input[type="date"],
         input[type="number"] {
-            width: 100%; /* Full width of their container */
-            padding: 8px 12px; /* Inner padding */
-            margin-top: 4px; /* Space above */
-            margin-bottom: 12px; /* Space below */
-            border: 1px solid #d1d5db; /* Light gray border */
-            border-radius: 6px; /* Rounded corners for inputs */
-            font-size: 1rem; /* Standard font size */
-            line-height: 1.5; /* Line height for readability */
-            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions for focus states */
-            box-sizing: border-box; /* Ensure padding doesn't increase width */
+            width: 100%;
+            padding: 6px 10px;
+            margin-top: 2px;
+            margin-bottom: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            box-sizing: border-box;
         }
-        /* Styling for textarea to match inputs */
         textarea {
-            width: 100%; /* Full width of their container */
-            padding: 8px 12px; /* Inner padding */
-            margin-top: 4px; /* Space above */
-            margin-bottom: 12px; /* Space below */
-            border: 1px solid #d1d5db; /* Light gray border */
-            border-radius: 6px; /* Rounded corners for inputs */
-            font-size: 1rem; /* Standard font size */
-            line-height: 1.5; /* Line height for readability */
-            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions for focus states */
-            box-sizing: border-box; /* Ensure padding doesn't increase width */
-            resize: vertical; /* Allow vertical resizing for textareas */
+            width: 100%;
+            padding: 6px 10px;
+            margin-top: 2px;
+            margin-bottom: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            box-sizing: border-box;
+            resize: none;
+            height: 60px;
         }
-        /* Focus styles for input fields and textareas */
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="date"]:focus,
-        input[type="number"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none; /* Remove default outline */
-            border-color: #2563eb; /* Blue border on focus */
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); /* Blue shadow on focus */
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
-        /* Styling for labels */
         label {
-            display: block; /* Make labels block-level for proper spacing */
-            margin-bottom: 4px; /* Space below label */
-            font-weight: 500; /* Medium font weight */
-            color: #374151; /* Dark gray text color */
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.9rem;
         }
-        /* Styling for select dropdown */
         select {
             width: 100%;
-            padding: 8px 12px;
-            margin-top: 4px;
-            margin-bottom: 12px;
+            padding: 6px 10px;
+            margin-top: 2px;
+            margin-bottom: 8px;
             border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 1rem;
-            line-height: 1.5;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.4;
             background-color: white;
-            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
             box-sizing: border-box;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23374151' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 12px;
+            background-position: right 10px center;
+            background-size: 10px;
         }
-        /* Styling for required field indicator */
         .required::after {
             content: "*";
             color: #dc2626;
-            margin-left: 4px;
+            margin-left: 2px;
         }
-        /* Hide print button when printing */
         @media print {
             body {
                 background-color: white;
@@ -114,81 +103,89 @@
             }
             .a4-container {
                 box-shadow: none;
-                padding: 15mm; /* Standard print margins */
+                padding: 10mm;
                 width: 100%;
-                min-height: auto;
+                height: auto;
                 border-radius: 0;
             }
             .download-button {
                 display: none;
             }
-            /* Ensure page breaks don't happen in the middle of sections */
             .form-section {
                 page-break-inside: avoid;
             }
         }
-        /* Form section styling */
         .form-section {
-            margin-bottom: 20px;
-            padding-bottom: 16px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #e5e7eb;
         }
         .form-section:last-child {
             border-bottom: none;
             margin-bottom: 0;
         }
-        /* Form header styling */
         .form-header {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
         .form-header h1 {
             color: #1f2937;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
+            font-size: 1.5rem;
         }
         .form-header p {
             color: #6b7280;
+            font-size: 0.85rem;
+            margin-top: 0;
         }
-        /* Two column layout for some form fields */
         .form-row {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
         .form-col {
             flex: 1;
         }
-        /* Download button styling */
         .download-button {
             background-color: #2563eb;
             color: white;
             border: none;
-            border-radius: 6px;
-            padding: 12px 16px;
+            border-radius: 4px;
+            padding: 8px 16px;
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.2s;
             width: 100%;
-            margin-top: 24px;
+            margin-top: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         .download-button:hover {
             background-color: #1d4ed8;
         }
         .download-button svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
+        }
+        .logo {
+            max-width: 150px;
+            margin: 0 auto 10px;
+            display: block;
+        }
+        h2 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
     <div class="a4-container">
-        <!-- Form Header -->
+        <!-- Logo -->
         <div class="form-header">
-            <h1 class="text-2xl font-bold">Refund Request Form</h1>
+            <img src="https://i.imgur.com/6Dsdfqd.png" alt="Company Logo" class="logo">
+            <h1>Refund Request Form</h1>
             <p>Please complete all fields marked with an asterisk (*)</p>
         </div>
 
@@ -196,7 +193,7 @@
         <form id="refundForm">
             <!-- Recipient Information Section -->
             <div class="form-section">
-                <h2 class="text-xl font-semibold mb-4">Recipient Information</h2>
+                <h2 class="font-semibold">Recipient Information</h2>
                 
                 <div class="form-row">
                     <div class="form-col">
@@ -215,7 +212,7 @@
             
             <!-- Refund Details Section -->
             <div class="form-section">
-                <h2 class="text-xl font-semibold mb-4">Refund Details</h2>
+                <h2 class="font-semibold">Refund Details</h2>
                 
                 <label for="orderNumber" class="required">Order/Invoice Number</label>
                 <input type="text" id="orderNumber" name="orderNumber">
@@ -231,41 +228,51 @@
                     </div>
                 </div>
                 
-                <label for="paymentMethod" class="required">Payment Method</label>
-                <select id="paymentMethod" name="paymentMethod">
-                    <option value="">Select payment method</option>
-                    <option value="creditCard">Credit Card</option>
-                    <option value="debitCard">Debit Card</option>
-                    <option value="bankTransfer">Bank Transfer</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="cash">Cash</option>
-                    <option value="other">Other</option>
-                </select>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="paymentMethod" class="required">Payment Method</label>
+                        <select id="paymentMethod" name="paymentMethod">
+                            <option value="">Select payment method</option>
+                            <option value="creditCard">Credit Card</option>
+                            <option value="debitCard">Debit Card</option>
+                            <option value="bankTransfer">Bank Transfer</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="cash">Cash</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-col">
+                        <label for="preferredRefundMethod" class="required">Preferred Refund Method</label>
+                        <select id="preferredRefundMethod" name="preferredRefundMethod">
+                            <option value="">Select refund method</option>
+                            <option value="originalPayment">Original Payment Method</option>
+                            <option value="bankTransfer">Bank Transfer</option>
+                            <option value="check">Check</option>
+                        </select>
+                    </div>
+                </div>
                 
                 <label for="productDetails" class="required">Product/Service Details</label>
-                <textarea id="productDetails" name="productDetails" rows="3"></textarea>
+                <textarea id="productDetails" name="productDetails" rows="2"></textarea>
             </div>
             
             <!-- Bank Details for Refund Section -->
             <div class="form-section">
-                <h2 class="text-xl font-semibold mb-4">Bank Details for Refund</h2>
+                <h2 class="font-semibold">Bank Details for Refund</h2>
                 
-                <label for="bankName" class="required">Bank Name</label>
-                <input type="text" id="bankName" name="bankName">
-                
-                <label for="accountName" class="required">Account Name</label>
-                <input type="text" id="accountName" name="accountName">
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="bankName" class="required">Bank Name</label>
+                        <input type="text" id="bankName" name="bankName">
+                    </div>
+                    <div class="form-col">
+                        <label for="accountName" class="required">Account Name</label>
+                        <input type="text" id="accountName" name="accountName">
+                    </div>
+                </div>
                 
                 <label for="accountNumber" class="required">Account Number</label>
                 <input type="text" id="accountNumber" name="accountNumber">
-                
-                <label for="preferredRefundMethod" class="required">Preferred Refund Method</label>
-                <select id="preferredRefundMethod" name="preferredRefundMethod">
-                    <option value="">Select refund method</option>
-                    <option value="originalPayment">Original Payment Method</option>
-                    <option value="bankTransfer">Bank Transfer</option>
-                    <option value="check">Check</option>
-                </select>
             </div>
             
             <!-- Download PDF Button -->
@@ -283,11 +290,6 @@
         function printDocument() {
             window.print();
         }
-        
-        // Also attach the event listener to the button
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('downloadPDF').addEventListener('click', printDocument);
-        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9639b536108b5064',t:'MTc1MzI1ODI5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9639c5ad8603500b',t:'MTc1MzI1ODk2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
