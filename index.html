@@ -8,10 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Link to Google Fonts for Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- jsPDF library for PDF generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- html2canvas for capturing logo -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <!-- html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         /* Base styles for the body */
         body {
@@ -28,7 +28,7 @@
         .a4-container {
             background-color: #ffffff;
             width: 210mm;
-            height: 297mm; /* Fixed height for A4 */
+            min-height: 297mm; /* Fixed height for A4 */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 15mm;
             box-sizing: border-box;
@@ -162,6 +162,37 @@
             font-size: 1.1rem;
             margin-bottom: 8px;
         }
+        /* PDF Preview styles */
+        #pdfPreview {
+            display: none;
+            width: 210mm;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20mm;
+            box-sizing: border-box;
+        }
+        .pdf-row {
+            margin-bottom: 10px;
+            display: flex;
+        }
+        .pdf-label {
+            font-weight: 600;
+            margin-right: 5px;
+            min-width: 150px;
+        }
+        .pdf-value {
+            flex: 1;
+        }
+        .pdf-section {
+            margin-bottom: 15px;
+        }
+        .pdf-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
         /* Loading spinner */
         .loading {
             display: none;
@@ -190,7 +221,7 @@
     </style>
 </head>
 <body>
-    <div class="a4-container">
+    <div class="a4-container" id="formContainer">
         <!-- Logo -->
         <div class="form-header">
             <img src="https://i.imgur.com/6Dsdfqd.png" alt="Company Logo" class="logo" id="companyLogo">
@@ -294,20 +325,150 @@
         </form>
     </div>
     
+    <!-- Hidden PDF Preview Element -->
+    <div id="pdfPreview">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://i.imgur.com/6Dsdfqd.png" alt="Company Logo" style="max-width: 150px; margin: 0 auto;">
+            <h1 style="font-size: 20px; margin-top: 10px; margin-bottom: 5px;">Refund Request Form</h1>
+        </div>
+        
+        <div class="pdf-section">
+            <div class="pdf-section-title">Recipient Information</div>
+            <div class="pdf-row">
+                <div class="pdf-label">First Name:</div>
+                <div class="pdf-value" id="pdf-firstName"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Last Name:</div>
+                <div class="pdf-value" id="pdf-lastName"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Email Address:</div>
+                <div class="pdf-value" id="pdf-email"></div>
+            </div>
+        </div>
+        
+        <div class="pdf-section">
+            <div class="pdf-section-title">Refund Details</div>
+            <div class="pdf-row">
+                <div class="pdf-label">Order/Invoice Number:</div>
+                <div class="pdf-value" id="pdf-orderNumber"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Purchase Date:</div>
+                <div class="pdf-value" id="pdf-purchaseDate"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Purchase Amount:</div>
+                <div class="pdf-value" id="pdf-purchaseAmount"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Payment Method:</div>
+                <div class="pdf-value" id="pdf-paymentMethod"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Preferred Refund Method:</div>
+                <div class="pdf-value" id="pdf-preferredRefundMethod"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Product/Service Details:</div>
+                <div class="pdf-value" id="pdf-productDetails"></div>
+            </div>
+        </div>
+        
+        <div class="pdf-section">
+            <div class="pdf-section-title">Bank Details for Refund</div>
+            <div class="pdf-row">
+                <div class="pdf-label">Bank Name:</div>
+                <div class="pdf-value" id="pdf-bankName"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Account Name:</div>
+                <div class="pdf-value" id="pdf-accountName"></div>
+            </div>
+            <div class="pdf-row">
+                <div class="pdf-label">Account Number:</div>
+                <div class="pdf-value" id="pdf-accountNumber"></div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 12px; color: #666;">
+            Form submitted on: <span id="pdf-date"></span>
+        </div>
+    </div>
+    
     <!-- Loading spinner -->
     <div class="loading" id="loadingSpinner">
         <div class="spinner"></div>
     </div>
     
     <script>
-        // Wait for document to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Add event listener to download button
-            document.getElementById('downloadPDF').addEventListener('click', function() {
-                // Use a simpler approach with window.print() that works more reliably
-                window.print();
-            });
+            document.getElementById('downloadPDF').addEventListener('click', generatePDF);
+            
+            // Function to generate PDF
+            function generatePDF() {
+                // Show loading spinner
+                document.getElementById('loadingSpinner').style.display = 'flex';
+                
+                // Get form data and populate the PDF preview
+                const formData = {
+                    firstName: document.getElementById('firstName').value || 'N/A',
+                    lastName: document.getElementById('lastName').value || 'N/A',
+                    email: document.getElementById('email').value || 'N/A',
+                    orderNumber: document.getElementById('orderNumber').value || 'N/A',
+                    purchaseDate: document.getElementById('purchaseDate').value || 'N/A',
+                    purchaseAmount: document.getElementById('purchaseAmount').value || 'N/A',
+                    paymentMethod: document.getElementById('paymentMethod').value || 'N/A',
+                    preferredRefundMethod: document.getElementById('preferredRefundMethod').value || 'N/A',
+                    productDetails: document.getElementById('productDetails').value || 'N/A',
+                    bankName: document.getElementById('bankName').value || 'N/A',
+                    accountName: document.getElementById('accountName').value || 'N/A',
+                    accountNumber: document.getElementById('accountNumber').value || 'N/A'
+                };
+                
+                // Format date if provided
+                if (formData.purchaseDate !== 'N/A') {
+                    const date = new Date(formData.purchaseDate);
+                    formData.purchaseDate = date.toLocaleDateString();
+                }
+                
+                // Set current date
+                const today = new Date();
+                document.getElementById('pdf-date').textContent = today.toLocaleDateString();
+                
+                // Populate PDF preview with form data
+                document.getElementById('pdf-firstName').textContent = formData.firstName;
+                document.getElementById('pdf-lastName').textContent = formData.lastName;
+                document.getElementById('pdf-email').textContent = formData.email;
+                document.getElementById('pdf-orderNumber').textContent = formData.orderNumber;
+                document.getElementById('pdf-purchaseDate').textContent = formData.purchaseDate;
+                document.getElementById('pdf-purchaseAmount').textContent = formData.purchaseAmount;
+                document.getElementById('pdf-paymentMethod').textContent = formData.paymentMethod;
+                document.getElementById('pdf-preferredRefundMethod').textContent = formData.preferredRefundMethod;
+                document.getElementById('pdf-productDetails').textContent = formData.productDetails;
+                document.getElementById('pdf-bankName').textContent = formData.bankName;
+                document.getElementById('pdf-accountName').textContent = formData.accountName;
+                document.getElementById('pdf-accountNumber').textContent = formData.accountNumber;
+                
+                // Generate PDF from the preview element
+                const element = document.getElementById('pdfPreview');
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: 'Refund_Request_Form.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                
+                // Use html2pdf to generate and download the PDF
+                html2pdf().from(element).set(opt).save().then(function() {
+                    // Hide loading spinner when done
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                });
+            }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'965333dc5490898e',t:'MTc1MzUyNTYyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96533cccb37e898e',t:'MTc1MzUyNTk5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
