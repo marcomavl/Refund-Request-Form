@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Link to Google Fonts for Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         /* Base styles for the body */
         body {
@@ -95,26 +97,6 @@
             color: #dc2626;
             margin-left: 2px;
         }
-        @media print {
-            body {
-                background-color: white;
-                padding: 0;
-                margin: 0;
-            }
-            .a4-container {
-                box-shadow: none;
-                padding: 10mm;
-                width: 100%;
-                height: auto;
-                border-radius: 0;
-            }
-            .download-button {
-                display: none;
-            }
-            .form-section {
-                page-break-inside: avoid;
-            }
-        }
         .form-section {
             margin-bottom: 12px;
             padding-bottom: 10px;
@@ -184,7 +166,7 @@
     <div class="a4-container">
         <!-- Logo -->
         <div class="form-header">
-            <img src="https://i.imgur.com/6Dsdfqd.png" alt="Company Logo" class="logo">
+            <img src="https://i.imgur.com/6Dsdfqd.png" alt="Company Logo" class="logo" id="companyLogo">
             <h1>Refund Request Form</h1>
             <p>Please complete all fields marked with an asterisk (*)</p>
         </div>
@@ -233,21 +215,21 @@
                         <label for="paymentMethod" class="required">Payment Method</label>
                         <select id="paymentMethod" name="paymentMethod">
                             <option value="">Select payment method</option>
-                            <option value="creditCard">Credit Card</option>
-                            <option value="debitCard">Debit Card</option>
-                            <option value="bankTransfer">Bank Transfer</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="cash">Cash</option>
-                            <option value="other">Other</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Debit Card">Debit Card</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="form-col">
                         <label for="preferredRefundMethod" class="required">Preferred Refund Method</label>
                         <select id="preferredRefundMethod" name="preferredRefundMethod">
                             <option value="">Select refund method</option>
-                            <option value="originalPayment">Original Payment Method</option>
-                            <option value="bankTransfer">Bank Transfer</option>
-                            <option value="check">Check</option>
+                            <option value="Original Payment Method">Original Payment Method</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Check">Check</option>
                         </select>
                     </div>
                 </div>
@@ -276,7 +258,7 @@
             </div>
             
             <!-- Download PDF Button -->
-            <button type="button" id="downloadPDF" class="download-button" onclick="printDocument()">
+            <button type="button" id="downloadPDF" class="download-button" onclick="generatePDF()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
@@ -286,10 +268,99 @@
     </div>
     
     <script>
-        // Function to print/download the document
-        function printDocument() {
-            window.print();
+        // Function to generate and download PDF
+        function generatePDF() {
+            // Get form data
+            const formData = {
+                firstName: document.getElementById('firstName').value || '[Not provided]',
+                lastName: document.getElementById('lastName').value || '[Not provided]',
+                email: document.getElementById('email').value || '[Not provided]',
+                orderNumber: document.getElementById('orderNumber').value || '[Not provided]',
+                purchaseDate: document.getElementById('purchaseDate').value || '[Not provided]',
+                purchaseAmount: document.getElementById('purchaseAmount').value || '[Not provided]',
+                paymentMethod: document.getElementById('paymentMethod').value || '[Not provided]',
+                preferredRefundMethod: document.getElementById('preferredRefundMethod').value || '[Not provided]',
+                productDetails: document.getElementById('productDetails').value || '[Not provided]',
+                bankName: document.getElementById('bankName').value || '[Not provided]',
+                accountName: document.getElementById('accountName').value || '[Not provided]',
+                accountNumber: document.getElementById('accountNumber').value || '[Not provided]'
+            };
+            
+            // Format date if provided
+            if (formData.purchaseDate !== '[Not provided]') {
+                const date = new Date(formData.purchaseDate);
+                formData.purchaseDate = date.toLocaleDateString();
+            }
+            
+            // Create PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add logo
+            const logoImg = document.getElementById('companyLogo');
+            // Create a canvas to convert the image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = logoImg.width;
+            canvas.height = logoImg.height;
+            ctx.drawImage(logoImg, 0, 0, logoImg.width, logoImg.height);
+            const logoData = canvas.toDataURL('image/png');
+            
+            // Add logo to PDF
+            doc.addImage(logoData, 'PNG', 75, 10, 60, 30);
+            
+            // Add title
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Refund Request Form', 105, 50, { align: 'center' });
+            
+            // Set font for content
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            
+            // Add recipient information
+            doc.setFont('helvetica', 'bold');
+            doc.text('Recipient Information', 20, 65);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`First Name: ${formData.firstName}`, 20, 75);
+            doc.text(`Last Name: ${formData.lastName}`, 105, 75);
+            doc.text(`Email Address: ${formData.email}`, 20, 85);
+            
+            // Add refund details
+            doc.setFont('helvetica', 'bold');
+            doc.text('Refund Details', 20, 100);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Order/Invoice Number: ${formData.orderNumber}`, 20, 110);
+            doc.text(`Purchase Date: ${formData.purchaseDate}`, 20, 120);
+            doc.text(`Purchase Amount: ${formData.purchaseAmount}`, 105, 120);
+            doc.text(`Payment Method: ${formData.paymentMethod}`, 20, 130);
+            doc.text(`Preferred Refund Method: ${formData.preferredRefundMethod}`, 105, 130);
+            
+            // Add product details with text wrapping
+            doc.text('Product/Service Details:', 20, 140);
+            const splitText = doc.splitTextToSize(formData.productDetails, 170);
+            doc.text(splitText, 20, 150);
+            
+            // Calculate Y position after product details
+            let yPos = 150 + (splitText.length * 7);
+            if (yPos < 170) yPos = 170; // Minimum spacing
+            
+            // Add bank details
+            doc.setFont('helvetica', 'bold');
+            doc.text('Bank Details for Refund', 20, yPos);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Bank Name: ${formData.bankName}`, 20, yPos + 10);
+            doc.text(`Account Name: ${formData.accountName}`, 105, yPos + 10);
+            doc.text(`Account Number: ${formData.accountNumber}`, 20, yPos + 20);
+            
+            // Add footer with date
+            const today = new Date();
+            doc.setFontSize(10);
+            doc.text(`Generated on: ${today.toLocaleDateString()}`, 20, 280);
+            
+            // Save the PDF
+            doc.save('Refund_Request_Form.pdf');
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9639c5ad8603500b',t:'MTc1MzI1ODk2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'965322a6a712e65e',t:'MTc1MzUyNDkyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
