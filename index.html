@@ -187,20 +187,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        /* Print styles to hide form elements when printing */
-        @media print {
-            input, select, textarea, button {
-                display: none;
-            }
-            label:after {
-                content: attr(data-value);
-                margin-left: 5px;
-            }
-            .form-header p {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
@@ -348,6 +334,12 @@
                     formInstructions.remove();
                 }
                 
+                // Remove required asterisks from labels
+                const requiredLabels = clone.querySelectorAll('.required');
+                requiredLabels.forEach(label => {
+                    label.classList.remove('required');
+                });
+                
                 // Get all form values
                 const inputs = formContainer.querySelectorAll('input, select, textarea');
                 const cloneInputs = clone.querySelectorAll('input, select, textarea');
@@ -372,26 +364,48 @@
                 // Add the clone to the document for HTML2Canvas to work
                 document.body.appendChild(clone);
                 
-                // Use html2canvas to capture the form
+                // Use html2canvas to capture the form with optimized settings
                 html2canvas(clone, {
-                    scale: 2,
+                    scale: 1, // Lower scale for smaller file size
                     logging: false,
-                    useCORS: true
+                    useCORS: true,
+                    imageTimeout: 0,
+                    backgroundColor: '#ffffff',
+                    onclone: function(clonedDoc) {
+                        // Additional modifications to the cloned document if needed
+                        const clonedLabels = clonedDoc.querySelectorAll('.required');
+                        clonedLabels.forEach(label => {
+                            label.classList.remove('required');
+                        });
+                    }
                 }).then(canvas => {
                     // Remove the clone from the document
                     document.body.removeChild(clone);
                     
-                    // Create PDF from canvas
+                    // Create PDF from canvas with optimized settings
                     const { jsPDF } = window.jspdf;
-                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const pdf = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'mm',
+                        format: 'a4',
+                        compress: true
+                    });
                     
                     // Calculate dimensions
                     const imgWidth = 210; // A4 width in mm
-                    const pageHeight = 297; // A4 height in mm
                     const imgHeight = canvas.height * imgWidth / canvas.width;
                     
-                    // Add image to PDF (scaled to fit A4)
-                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+                    // Add image to PDF with compression
+                    pdf.addImage(
+                        canvas.toDataURL('image/jpeg', 0.7), // Use JPEG with 70% quality
+                        'JPEG', 
+                        0, 
+                        0, 
+                        imgWidth, 
+                        imgHeight, 
+                        undefined, 
+                        'FAST' // Use fast compression
+                    );
                     
                     // Save the PDF
                     pdf.save('Refund_Request_Form.pdf');
@@ -402,5 +416,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9653455f42904d87',t:'MTc1MzUyNjM0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9653537a05acce0e',t:'MTc1MzUyNjkyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
