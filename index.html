@@ -193,11 +193,20 @@
             gap: 8px;
         }
         .amount-input {
-            flex: 1;
+            flex: 2;
         }
         .currency-select {
-            width: 80px;
-            flex-shrink: 0;
+            flex: 1;
+        }
+        .amount-row {
+            display: flex;
+            gap: 12px;
+        }
+        .amount-col {
+            flex: 2;
+        }
+        .currency-col {
+            flex: 1;
         }
         /* Signature box styles */
         .signature-section {
@@ -273,12 +282,13 @@
                         <input type="date" id="purchaseDate" name="purchaseDate">
                     </div>
                     <div class="form-col">
-                        <label for="purchaseAmount" class="required" id="purchaseAmountLabel">Purchase Amount</label>
-                        <div class="amount-container">
-                            <div class="amount-input">
+                        <div class="amount-row">
+                            <div class="amount-col">
+                                <label for="purchaseAmount" class="required" id="purchaseAmountLabel">Purchase Amount</label>
                                 <input type="number" id="purchaseAmount" name="purchaseAmount" step="0.01" min="0">
                             </div>
-                            <div class="currency-select">
+                            <div class="currency-col">
+                                <label for="currency" class="required" id="currencyLabel">Currency</label>
                                 <select id="currency" name="currency">
                                     <option value="LAK">LAK</option>
                                     <option value="THB">THB</option>
@@ -410,26 +420,45 @@
                     label.classList.remove('required');
                 });
                 
-                // Get all form values
-                const inputs = formContainer.querySelectorAll('input, select, textarea');
-                const cloneInputs = clone.querySelectorAll('input, select, textarea');
-                
-                // Special handling for purchase amount and currency
+                // Get purchase amount and currency values
                 const purchaseAmount = document.getElementById('purchaseAmount').value || 'Not provided';
                 const currency = document.getElementById('currency').value || 'LAK';
                 
-                // Replace form elements with their values
-                inputs.forEach((input, index) => {
-                    // Skip currency select as we'll handle it with purchase amount
-                    if (input.id === 'currency') return;
+                // Combine purchase amount and currency
+                const amountWithCurrency = purchaseAmount !== 'Not provided' ? `${purchaseAmount} ${currency}` : 'Not provided';
+                
+                // Find the purchase amount and currency elements in the clone
+                const amountInput = clone.querySelector('#purchaseAmount');
+                const currencySelect = clone.querySelector('#currency');
+                const amountLabel = clone.querySelector('#purchaseAmountLabel');
+                const currencyLabel = clone.querySelector('#currencyLabel');
+                
+                // Create a combined amount+currency display
+                if (amountInput && amountInput.parentNode && currencySelect && currencySelect.parentNode) {
+                    // Create a text node with the combined value
+                    const valueText = document.createElement('div');
+                    valueText.textContent = amountWithCurrency;
+                    valueText.style.padding = '6px 0';
+                    valueText.style.marginBottom = '8px';
+                    valueText.style.fontSize = '0.9rem';
                     
-                    let value = input.value || 'Not provided';
-                    const cloneInput = cloneInputs[index];
+                    // Replace the amount input with the combined value
+                    amountInput.parentNode.insertBefore(valueText, amountInput);
+                    amountInput.remove();
                     
-                    // Special handling for purchase amount to include currency
-                    if (input.id === 'purchaseAmount' && value !== 'Not provided') {
-                        value = `${value} ${currency}`;
+                    // Remove the currency select and its label
+                    if (currencySelect.parentNode.parentNode) {
+                        currencySelect.parentNode.parentNode.remove();
                     }
+                }
+                
+                // Process all other form elements
+                const inputs = clone.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    // Skip the currency select as we've already handled it
+                    if (input.id === 'currency' || input.id === 'purchaseAmount') return;
+                    
+                    const value = input.value || 'Not provided';
                     
                     // Create a text node with the value
                     const valueText = document.createElement('div');
@@ -439,9 +468,9 @@
                     valueText.style.fontSize = '0.9rem';
                     
                     // Replace the input with the value text
-                    if (cloneInput && cloneInput.parentNode) {
-                        cloneInput.parentNode.insertBefore(valueText, cloneInput);
-                        cloneInput.remove();
+                    if (input.parentNode) {
+                        input.parentNode.insertBefore(valueText, input);
+                        input.remove();
                     }
                 });
                 
@@ -500,5 +529,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9653747372a5849d',t:'MTc1MzUyODI3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96537f0ff163fe1d',t:'MTc1MzUyODcwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
